@@ -21,7 +21,7 @@ main () {
     sudo kubectl apply -n argocd -f opensearch.yaml
     # sync the application
     argocd login kube.local:443 --grpc-web-root-path /argocd-server --insecure  --username admin --password $(sudo kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
-    argocd app sync opensearch
+    argocd app sync opensearch-operator
 
 }
 main "$@"
