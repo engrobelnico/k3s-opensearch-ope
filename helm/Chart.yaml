@@ -1,6 +1,6 @@
 apiVersion: v2
-name: lvm-opensearch
-description: A Helm chart for Kubernetes to deploy opensearch
+name: lvm-opensearch-operator
+description: A Helm chart for Kubernetes to deploy opensearch operator
 
 # A chart can be either an 'application' or a 'library' chart.
 #
