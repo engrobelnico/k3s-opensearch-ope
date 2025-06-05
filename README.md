@@ -10,5 +10,7 @@ argocd app terminate-op opensearch
 https://opensearch.org/docs/latest/install-and-configure/install-opensearch/helm/
 
 curl -XGET https://kube.local/opensearch -u 'admin:VerySecurePassword12!' --insecure
+curl -XGET https://172.17.230.183/opensearch/_plugins/_security/api/securityconfig?pretty -u 'admin:admin' --insecure
 
-sudo kubectl apply --namespace=opensearch -f cluster.yaml
+kctl get opensearchclusters --all-namespaces
+sudo kubectl delete opensearchclusters opensearch -n default
