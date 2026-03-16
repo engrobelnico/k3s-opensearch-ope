@@ -13,4 +13,4 @@ curl -XGET https://kube.local/opensearch -u 'admin:VerySecurePassword12!' --inse
 curl -XGET https://172.17.230.183/opensearch/_plugins/_security/api/securityconfig?pretty -u 'admin:admin' --insecure
 
 kctl get opensearchclusters --all-namespaces
-sudo kubectl delete opensearchclusters opensearch -n default
+sudo kubectl delete opensearchclusters opensearch -n opensearch
