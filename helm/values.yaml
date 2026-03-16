@@ -1,3 +1,6 @@
+cert-manager:
+  installCRDs: true
+
 manager:
   # Log level of the operator. Possible values: debug, info, warn, error
   loglevel: info

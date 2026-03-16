@@ -2,5 +2,8 @@ dependencies:
 - name: opensearch-operator
   repository: https://opensearch-project.github.io/opensearch-k8s-operator
   version: 3.0.1
-digest: sha256:c0d2f47ba58759c53e017d46bbebdb14860ab3c259b93f7893382b6f8aa9a99a
-generated: "2026-03-16T10:42:48.434347781+01:00"
+- name: cert-manager
+  repository: https://charts.jetstack.io
+  version: v1.15.3
+digest: sha256:0d7038bbb1d20ff8b7691564bfa57917d9235c21688e8f89f6b5e507b862dfa7
+generated: "2026-03-16T11:19:44.827657079+01:00"

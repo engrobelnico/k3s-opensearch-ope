@@ -14,3 +14,8 @@ curl -XGET https://172.17.230.183/opensearch/_plugins/_security/api/securityconf
 
 kctl get opensearchclusters --all-namespaces
 sudo kubectl delete opensearchclusters opensearch -n opensearch
+
+# Troubleshooting
+# If sync fails with "one or more synchronization tasks are not valid", it is likely due to CRD size.
+# Enable ServerSideApply for the application:
+# argocd app set <app-name> --sync-option ServerSideApply=true
