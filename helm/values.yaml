@@ -1,6 +1,12 @@
 cert-manager:
   installCRDs: true
 
+opensearch-operator:
+  webhook:
+    certManager:
+      # Disabled: Certificate/Issuer managed in helm/templates/ with ArgoCD sync-waves
+      enabled: false
+
 manager:
   # Log level of the operator. Possible values: debug, info, warn, error
   loglevel: info
