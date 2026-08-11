@@ -23,5 +23,9 @@ main () {
     argocd login kube.local:443 --grpc-web-root-path /argocd-server --insecure  --username admin --password $(sudo kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
     argocd app sync opensearch-operator
 
+        # Ensure cert-manager injects CA bundle into the operator validating webhook.
+        sudo kubectl annotate validatingwebhookconfiguration opensearch-operator-validating-webhook-configuration \
+            cert-manager.io/inject-ca-from='opensearch/opensearch-operator-serving-cert' --overwrite
+
 }
 main "$@"
