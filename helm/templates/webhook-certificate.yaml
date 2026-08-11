@@ -25,12 +25,3 @@ spec:
     kind: Issuer
     name: opensearch-operator-selfsigned-issuer
   secretName: {{ .Release.Name }}-webhook-server-cert
----
-# Sync wave 4: patch webhook configuration after webhook resources exist
-apiVersion: admissionregistration.k8s.io/v1
-kind: ValidatingWebhookConfiguration
-metadata:
-  name: {{ .Release.Name }}-validating-webhook-configuration
-  annotations:
-    argocd.argoproj.io/sync-wave: "4"
-    cert-manager.io/inject-ca-from: "{{ .Release.Namespace }}/opensearch-operator-serving-cert"
