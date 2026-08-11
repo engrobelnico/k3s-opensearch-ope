@@ -13,9 +13,14 @@ curl -XGET https://kube.local/opensearch -u 'admin:VerySecurePassword12!' --inse
 curl -XGET https://172.17.230.183/opensearch/_plugins/_security/api/securityconfig?pretty -u 'admin:admin' --insecure
 
 kctl get opensearchclusters --all-namespaces
-sudo kubectl delete opensearchclusters opensearch -n opensearch
+kctl delete opensearchclusters opensearch -n opensearch
 
-# Troubleshooting
-# If sync fails with "one or more synchronization tasks are not valid", it is likely due to CRD size.
-# Enable ServerSideApply for the application:
-# argocd app set <app-name> --sync-option ServerSideApply=true
+sudo kubectl patch application/opensearch-operator --type json --patch='[ { "op": "remove", "path": "/metadata/finalizers" } ]' -n argocd
+
+kctl get namespace opensearch -o json | \
+  jq '.spec.finalizers = []' | \
+  kctl replace --raw "/api/v1/namespaces/opensearch/finalize" -f -
+
+kctl wait --for=delete namespace/opensearch --timeout=60s
+
+kubectl get policyreport -n opensearch
