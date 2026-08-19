@@ -17,15 +17,16 @@ main () {
         echo "Creating namespace $myNamespace";
         sudo kubectl create namespace $myNamespace;
     fi;
-    # deploy prometheus with argocd
+    # deploy opensearch operator with argocd
+    sudo kubectl apply -n argocd -f cert-manager.yaml
     sudo kubectl apply -n argocd -f opensearch.yaml
     # sync the application
     argocd login kube.local:443 --grpc-web-root-path /argocd-server --insecure  --username admin --password $(sudo kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
-    argocd app sync opensearch-operator
 
-        # Ensure cert-manager injects CA bundle into the operator validating webhook.
-        sudo kubectl annotate validatingwebhookconfiguration opensearch-operator-validating-webhook-configuration \
-            cert-manager.io/inject-ca-from='opensearch/opensearch-operator-serving-cert' --overwrite
+    # cert-manager must be serving before the operator's Certificate can be issued
+    argocd app sync cert-manager --grpc-web-root-path /argocd-server
+    argocd app wait cert-manager --health --timeout 300 --grpc-web-root-path /argocd-server
 
+    argocd app sync opensearch-operator --grpc-web-root-path /argocd-server
 }
 main "$@"
