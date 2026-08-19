@@ -8,14 +8,12 @@ metadata:
 spec:
   project: default
   source:
-    chart: cert-manager
-    repoURL: https://charts.jetstack.io
-    targetRevision: v1.21.1
+    path: cert-manager-chart
+    repoURL: https://github.com/engrobelnico/k3s-opensearch-ope.git
+    targetRevision: main
     helm:
-      values: |
-        crds:
-          enabled: true
-          keep: true
+      valueFiles:
+      - values.yaml
   destination:
     server: "https://kubernetes.default.svc"
     namespace: cert-manager

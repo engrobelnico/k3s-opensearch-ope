@@ -1,0 +1,18 @@
+apiVersion: v2
+name: lvm-cert-manager
+description: Vendored wrapper chart for cert-manager
+
+# cert-manager is vendored (helm/charts/*.tgz committed to git) rather than
+# fetched live by ArgoCD's repo-server: this cluster's egress passes through a
+# corporate TLS-intercepting proxy (Zscaler) whose root CA the repo-server pod
+# does not trust, so a live `helm pull --repo https://charts.jetstack.io` fails
+# TLS verification at sync time.
+type: application
+
+version: 0.1.0
+appVersion: "v1.21.1"
+
+dependencies:
+- name: cert-manager
+  version: v1.21.1
+  repository: https://charts.jetstack.io
